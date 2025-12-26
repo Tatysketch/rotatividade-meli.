@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2M - LINHA C - Gestão de Bancadas</title>
+    <style>
+        :root { --meli-yellow: #FFF159; --meli-blue: #2D3277; --meli-gray: #ebebeb; }
+        body { font-family: 'Arial', sans-serif; background-color: var(--meli-gray); margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { text-align: center; border-bottom: 3px solid var(--meli-yellow); margin-bottom: 20px; padding-bottom: 10px; }
+        .header h1 { color: var(--meli-blue); margin: 0; font-size: 1.6rem; text-transform: uppercase; }
+        .header p { margin: 5px 0 0; font-weight: bold; color: #666; font-size: 0.9rem; }
+        .esteira-container { display: flex; justify-content: space-between; gap: 20px; }
+        .lado { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        .centro-esteira { width: 50px; background: #333; border-radius: 25px; display: flex; align-items: center; justify-content: center; color: white; writing-mode: vertical-rl; font-weight: bold; font-size: 0.7rem; letter-spacing: 2px; }
+        .bancada { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 8px; position: relative; min-height: 65px; box-sizing: border-box; }
+        .gm { border-left: 10px solid #4caf50; }
+        .pesca { border-left: 10px solid #f44336; }
+        .categoria { border-left: 10px solid #9e9e9e; background: #f5f5f5; color: #aaa; }
+        .fixa { border: 2px solid var(--meli-blue); background: #e8f0fe; }
+        .label { font-size: 0.7rem; color: #777; font-weight: bold; text-transform: uppercase; display: block; }
+        .nome { font-weight: bold; color: var(--meli-blue); font-size: 1.1rem; display: block; margin-top: 5px; line-height: 1.2; }
+        .btn-girar { background: var(--meli-blue); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+        .btn-girar:hover { background: #1e2255; }
+        .badge { position: absolute; top: 5px; right: 8px; font-size: 0.6rem; background: var(--meli-blue); color: white; padding: 2px 6px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header"><h1>P2M - OPERAÇÃO LOGÍSTICA</h1><p>LINHA C - Gestão de Bancadas</p></div>
+    <div class="esteira-container">
+        <div class="lado" id="lado-esquerdo"><h3>ESQUERDA</h3></div>
+        <div class="centro-esteira">ESTEIRA LINHA C</div>
+        <div class="lado" id="lado-direito"><h3>DIREITA</h3></div>
+    </div>
+    <button class="btn-girar" onclick="executarRotatividade()">Girar Rotatividade 🔄</button>
+</div>
+<script>
+let fila = ["Tati", "Adrian", "Cleyton", "Cris", "Dulce", "Karol de Oliveira", "Karol Rocha", "Kerolen", "Laura", "Leticia", "Tais"];
+function executarRotatividade() {
+    let p = fila.shift(); fila.push(p);
+    const configE = [{id: "E1", t: "gm", l: "Bancada 01 (GM)", f: "Neuza"}, {id: "E2", t: "gm", l: "Bancada 02 (GM)"}, {id: "E3", t: "gm", l: "Bancada 03 (GM)"}, {id: "E4", t: "gm", l: "Bancada 04 (GM)"}, {id: "E5", t: "gm", l: "Bancada 05 (GM)"}];
+    const configD = [{id: "D1", t: "pesca", l: "Bancada 01 (PESCA)", f: "Samuel"}, {id: "D2", t: "categoria", l: "Bancada 02 (CAT)"}, {id: "D3", t: "categoria", l: "Bancada 03 (CAT)"}, {id: "D4", t: "categoria", l: "Bancada 04 (CAT)"}, {id: "D5", t: "gm", l: "Bancada 05 (GM)"}, {id: "D6", t: "gm", l: "Bancada 06 (GM)"}, {id: "D7", t: "gm", l: "Bancada 07 (GM)", f: "Alex"}];
+    let pool = [...fila];
+    render('lado-esquerdo', configE, pool);
+    render('lado-direito', configD, pool);
+}
+function render(divId, bancadas, pool) {
+    const cont = document.getElementById(divId);
+    cont.innerHTML = `<h3 style="text-align:center; font-size:0.9rem; color:#444;">${divId.includes('esquerdo') ? 'ESQUERDA' : 'DIREITA'}</h3>`;
+    bancadas.forEach(b => {
+        let display = "";
+        if (b.f) {
+            if (b.id === "E1") { let parceiro = pool.shift() || ""; display = `${b.f} / ${parceiro}`; }
+            else { display = b.f; }
+        } else if (b.t === "categoria") { display = "---"; }
+        else {
+            let p1 = pool.shift() || ""; let p2 = "";
+            if (p1 !== "Tati" && pool.length > 0 && pool[0] !== "Tati") { p2 = pool.shift(); }
+            display = p2 ? `${p1} / ${p2}` : p1;
+        }
+        cont.innerHTML += `<div class="bancada ${b.t} ${b.f ? 'fixa' : ''}">${b.f ? '<span class="badge">FIXO</span>' : ''}<span class="label">${b.l}</span><span class="nome">${display}</span></div>`;
+    });
+}
+window.onload = executarRotatividade;
+</script>
+</body>
+</html>
