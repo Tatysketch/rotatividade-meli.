@@ -37,29 +37,61 @@
     <button class="btn-girar" onclick="executarRotatividade()">Girar Rotatividade 🔄</button>
 </div>
 <script>
-let fila = ["Tati", "Adrian", "Cleyton", "Cris", "Dulce", "Karol de Oliveira", "Karol Rocha", "Kerolen", "Laura", "Leticia", "Tais"];
+// Adicionei Neuza e Alex na fila de rotatividade
+let fila = ["Neuza", "Alex", "Tati", "Adrian", "Cleyton", "Cris", "Dulce", "Karol de Oliveira", "Karol Rocha", "Kerolen", "Laura", "Leticia", "Tais"];
+
 function executarRotatividade() {
-    let p = fila.shift(); fila.push(p);
-    const configE = [{id: "E1", t: "gm", l: "Bancada 01 (GM)", f: "Neuza"}, {id: "E2", t: "gm", l: "Bancada 02 (GM)"}, {id: "E3", t: "gm", l: "Bancada 03 (GM)"}, {id: "E4", t: "gm", l: "Bancada 04 (GM)"}, {id: "E5", t: "gm", l: "Bancada 05 (GM)"}];
-    const configD = [{id: "D1", t: "pesca", l: "Bancada 01 (PESCA)", f: "Samuel"}, {id: "D2", t: "categoria", l: "Bancada 02 (CAT)"}, {id: "D3", t: "categoria", l: "Bancada 03 (CAT)"}, {id: "D4", t: "categoria", l: "Bancada 04 (CAT)"}, {id: "D5", t: "gm", l: "Bancada 05 (GM)"}, {id: "D6", t: "gm", l: "Bancada 06 (GM)"}, {id: "D7", t: "gm", l: "Bancada 07 (GM)", f: "Alex"}];
+    let p = fila.shift(); 
+    fila.push(p);
+    
+    // Removida a propriedade 'f: "Neuza"' da E1
+    const configE = [
+        {id: "E1", t: "gm", l: "Bancada 01 (GM)"}, 
+        {id: "E2", t: "gm", l: "Bancada 02 (GM)"}, 
+        {id: "E3", t: "gm", l: "Bancada 03 (GM)"}, 
+        {id: "E4", t: "gm", l: "Bancada 04 (GM)"}, 
+        {id: "E5", t: "gm", l: "Bancada 05 (GM)"}
+    ];
+    
+    // Removida a propriedade 'f: "Alex"' da D7 e mantido apenas o Samuel na D1
+    const configD = [
+        {id: "D1", t: "pesca", l: "Bancada 01 (PESCA)", f: "Samuel"}, 
+        {id: "D2", t: "categoria", l: "Bancada 02 (CAT)"}, 
+        {id: "D3", t: "categoria", l: "Bancada 03 (CAT)"}, 
+        {id: "D4", t: "categoria", l: "Bancada 04 (CAT)"}, 
+        {id: "D5", t: "gm", l: "Bancada 05 (GM)"}, 
+        {id: "D6", t: "gm", l: "Bancada 06 (GM)"}, 
+        {id: "D7", t: "gm", l: "Bancada 07 (GM)"}
+    ];
+
     let pool = [...fila];
     render('lado-esquerdo', configE, pool);
     render('lado-direito', configD, pool);
 }
+
 function render(divId, bancadas, pool) {
     const cont = document.getElementById(divId);
     cont.innerHTML = `<h3 style="text-align:center; font-size:0.9rem; color:#444;">${divId.includes('esquerdo') ? 'ESQUERDA' : 'DIREITA'}</h3>`;
+    
     bancadas.forEach(b => {
         let display = "";
+        
         if (b.f) {
-            if (b.id === "E1") { let parceiro = pool.shift() || ""; display = `${b.f} / ${parceiro}`; }
-            else { display = b.f; }
-        } else if (b.t === "categoria") { display = "---"; }
-        else {
-            let p1 = pool.shift() || ""; let p2 = "";
-            if (p1 !== "Tati" && pool.length > 0 && pool[0] !== "Tati") { p2 = pool.shift(); }
+            // Samuel fixo na Pesca (D1)
+            display = b.f; 
+        } else if (b.t === "categoria") { 
+            display = "---"; 
+        } else {
+            // Lógica de duplas para as demais bancadas GM
+            let p1 = pool.shift() || ""; 
+            let p2 = "";
+            // Mantive sua lógica especial para a Tati
+            if (p1 !== "" && p1 !== "Tati" && pool.length > 0 && pool[0] !== "Tati") { 
+                p2 = pool.shift(); 
+            }
             display = p2 ? `${p1} / ${p2}` : p1;
         }
+        
         cont.innerHTML += `<div class="bancada ${b.t} ${b.f ? 'fixa' : ''}">${b.f ? '<span class="badge">FIXO</span>' : ''}<span class="label">${b.l}</span><span class="nome">${display}</span></div>`;
     });
 }
