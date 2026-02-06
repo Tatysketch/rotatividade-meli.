@@ -2,100 +2,119 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>P2M - LINHA C - Gestão de Bancadas</title>
+    <title>P2M - OPERAÇÃO LOGÍSTICA</title>
     <style>
-        :root { --meli-yellow: #FFF159; --meli-blue: #2D3277; --meli-gray: #ebebeb; }
-        body { font-family: 'Arial', sans-serif; background-color: var(--meli-gray); margin: 0; padding: 20px; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .header { text-align: center; border-bottom: 3px solid var(--meli-yellow); margin-bottom: 20px; padding-bottom: 10px; }
-        .header h1 { color: var(--meli-blue); margin: 0; font-size: 1.6rem; text-transform: uppercase; }
-        .header p { margin: 5px 0 0; font-weight: bold; color: #666; font-size: 0.9rem; }
-        .esteira-container { display: flex; justify-content: space-between; gap: 20px; }
-        .lado { flex: 1; display: flex; flex-direction: column; gap: 10px; }
-        .centro-esteira { width: 50px; background: #333; border-radius: 25px; display: flex; align-items: center; justify-content: center; color: white; writing-mode: vertical-rl; font-weight: bold; font-size: 0.7rem; letter-spacing: 2px; }
-        .bancada { background: #fdfdfd; border: 1px solid #ddd; padding: 15px; border-radius: 8px; position: relative; min-height: 65px; box-sizing: border-box; }
-        .gm { border-left: 10px solid #4caf50; }
-        .pesca { border-left: 10px solid #f44336; }
-        .categoria { border-left: 10px solid #9e9e9e; background: #f5f5f5; color: #aaa; }
-        .fixa { border: 2px solid var(--meli-blue); background: #e8f0fe; }
-        .label { font-size: 0.7rem; color: #777; font-weight: bold; text-transform: uppercase; display: block; }
-        .nome { font-weight: bold; color: var(--meli-blue); font-size: 1.1rem; display: block; margin-top: 5px; line-height: 1.2; }
-        .btn-girar { background: var(--meli-blue); color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.2s; }
-        .btn-girar:hover { background: #1e2255; }
-        .badge { position: absolute; top: 5px; right: 8px; font-size: 0.6rem; background: var(--meli-blue); color: white; padding: 2px 6px; border-radius: 4px; }
+        body { font-family: sans-serif; background-color: #ffffff; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .painel { background: white; width: 1000px; border-radius: 10px; padding: 20px; border: 1px solid #ddd; }
+        .header { text-align: center; border-bottom: 2px solid #2d3277; margin-bottom: 20px; padding-bottom: 10px; }
+        .header h1 { color: #2d3277; margin: 0; font-size: 24px; }
+        
+        .colunas-container { display: flex; justify-content: space-between; align-items: flex-start; }
+        .coluna { width: 450px; }
+        
+        .esteira { width: 40px; background: #333; height: 650px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; writing-mode: vertical-rl; text-orientation: mixed; }
+
+        .card { background: white; border: 1px solid #ddd; border-left: 10px solid #5cb85c; border-radius: 5px; padding: 10px; margin-bottom: 10px; min-height: 50px; }
+        .card-info { font-size: 10px; color: #888; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        .nome-colaborador { color: #2d3277; font-size: 16px; font-weight: bold; }
+
+        .card-pesca { border-left: 10px solid #2d3277; }
+        .card-cat { border-left: 10px solid #f0ad4e; }
+
+        button { background: #2d3277; color: white; width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header"><h1>P2M - OPERAÇÃO LOGÍSTICA</h1><p>LINHA C - Gestão de Bancadas</p></div>
-    <div class="esteira-container">
-        <div class="lado" id="lado-esquerdo"><h3>ESQUERDA</h3></div>
-        <div class="centro-esteira">ESTEIRA LINHA C</div>
-        <div class="lado" id="lado-direito"><h3>DIREITA</h3></div>
+
+<div class="painel">
+    <div class="header">
+        <h1>P2M - OPERAÇÃO LOGÍSTICA</h1>
+        <p><b>GESTÃO DE BANCADAS - ESTRATÉGIA DE NIVELAMENTO</b></p>
     </div>
-    <button class="btn-girar" onclick="executarRotatividade()">Girar Rotatividade 🔄</button>
+
+    <div class="colunas-container">
+        <div class="coluna">
+            <h3 style="text-align:center; color:#888;">LADO ESQUERDO</h3>
+            <div class="card"><div class="card-info">BANCADA 01</div><div class="nome-colaborador" id="e1">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 02</div><div class="nome-colaborador" id="e2">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 03</div><div class="nome-colaborador" id="e3">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 04</div><div class="nome-colaborador" id="e4">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 05</div><div class="nome-colaborador" id="e5">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 06</div><div class="nome-colaborador" id="e6">---</div></div>
+        </div>
+
+        <div class="esteira">ESTEIRA LINHA C</div>
+
+        <div class="coluna">
+            <h3 style="text-align:center; color:#888;">LADO DIREITO</h3>
+            <div class="card card-pesca"><div class="card-info">PESCA (ROTATIVO)</div><div class="nome-colaborador" id="d-pesca">---</div></div>
+            <div class="card card-cat"><div class="card-info">CATEGORIAS</div><div class="nome-colaborador" id="d-cat">LÉO / REFORÇO</div></div>
+            <div class="card"><div class="card-info">BANCADA 04</div><div class="nome-colaborador" id="d4">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 05</div><div class="nome-colaborador" id="d5">---</div></div>
+            <div class="card"><div class="card-info">BANCADA 06</div><div class="nome-colaborador" id="d6">---</div></div>
+        </div>
+    </div>
+
+    <button onclick="gerarRotatividade()">Girar Rotatividade 🔄</button>
 </div>
+
 <script>
-// Adicionei Neuza e Alex na fila de rotatividade
-let fila = ["Neuza", "Alex", "Tati", "Adrian", "Cleyton", "Cris", "Dulce", "Karol de Oliveira", "Karol Rocha", "Kerolen", "Laura", "Leticia", "Tais"];
+// LISTAS CONFORME SUA ORIENTAÇÃO
+const destaques = ["Isac", "Karol Oliveira", "Liliane", "Maycon", "Peterson", "Karol Rocha", "Tati"];
+const aprendizado = ["Alex", "Leticia", "Thais Nunes", "Laura", "Adrian", "Alana", "Clayton", "Kerollen", "Samuel", "Leonardo"];
 
-function executarRotatividade() {
-    let p = fila.shift(); 
-    fila.push(p);
+function gerarRotatividade() {
+    let d = [...destaques].sort(() => Math.random() - 0.5);
+    let a = [...aprendizado].sort(() => Math.random() - 0.5);
     
-    // Removida a propriedade 'f: "Neuza"' da E1
-    const configE = [
-        {id: "E1", t: "gm", l: "Bancada 01 (GM)"}, 
-        {id: "E2", t: "gm", l: "Bancada 02 (GM)"}, 
-        {id: "E3", t: "gm", l: "Bancada 03 (GM)"}, 
-        {id: "E4", t: "gm", l: "Bancada 04 (GM)"}, 
-        {id: "E5", t: "gm", l: "Bancada 05 (GM)"}
-    ];
+    // IDs das bancadas GM (Esquerda 1-6 e Direita 4-6) = 9 bancadas
+    const idsGM = ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'd4', 'd5', 'd6'];
     
-    // Removida a propriedade 'f: "Alex"' da D7 e mantido apenas o Samuel na D1
-    const configD = [
-        {id: "D1", t: "pesca", l: "Bancada 01 (PESCA)", f: "Samuel"}, 
-        {id: "D2", t: "categoria", l: "Bancada 02 (CAT)"}, 
-        {id: "D3", t: "categoria", l: "Bancada 03 (CAT)"}, 
-        {id: "D4", t: "categoria", l: "Bancada 04 (CAT)"}, 
-        {id: "D5", t: "gm", l: "Bancada 05 (GM)"}, 
-        {id: "D6", t: "gm", l: "Bancada 06 (GM)"}, 
-        {id: "D7", t: "gm", l: "Bancada 07 (GM)"}
-    ];
+    // 1. SORTEIO PESCA (Removendo da lista de aprendizado para o exemplo, ou destaque)
+    // Conforme seu desenho, Pesca é rotativo. Vamos tirar um do aprendizado para a Pesca.
+    const sorteadoPesca = a.pop();
+    document.getElementById('d-pesca').innerText = sorteadoPesca;
 
-    let pool = [...fila];
-    render('lado-esquerdo', configE, pool);
-    render('lado-direito', configD, pool);
-}
+    // 2. DISTRIBUIÇÃO NAS BANCADAS
+    let distribuicao = {};
+    idsGM.forEach(id => distribuicao[id] = []);
 
-function render(divId, bancadas, pool) {
-    const cont = document.getElementById(divId);
-    cont.innerHTML = `<h3 style="text-align:center; font-size:0.9rem; color:#444;">${divId.includes('esquerdo') ? 'ESQUERDA' : 'DIREITA'}</h3>`;
-    
-    bancadas.forEach(b => {
-        let display = "";
-        
-        if (b.f) {
-            // Samuel fixo na Pesca (D1)
-            display = b.f; 
-        } else if (b.t === "categoria") { 
-            display = "---"; 
-        } else {
-            // Lógica de duplas para as demais bancadas GM
-            let p1 = pool.shift() || ""; 
-            let p2 = "";
-            // Mantive sua lógica especial para a Tati
-            if (p1 !== "" && p1 !== "Tati" && pool.length > 0 && pool[0] !== "Tati") { 
-                p2 = pool.shift(); 
-            }
-            display = p2 ? `${p1} / ${p2}` : p1;
-        }
-        
-        cont.innerHTML += `<div class="bancada ${b.t} ${b.f ? 'fixa' : ''}">${b.f ? '<span class="badge">FIXO</span>' : ''}<span class="label">${b.l}</span><span class="nome">${display}</span></div>`;
+    // A Tati gosta de ficar sozinha, então se ela for sorteada, a bancada dela não recebe aprendiz.
+    const bancadaTati = idsGM[Math.floor(Math.random() * idsGM.length)];
+    distribuicao[bancadaTati].push("Tati");
+    d.splice(d.indexOf("Tati"), 1);
+
+    // Coloca um Destaque em cada bancada restante (enquanto houver destaques)
+    let idsRestantes = idsGM.filter(id => id !== bancadaTati);
+    d.forEach((nome, i) => {
+        if(idsRestantes[i]) distribuicao[idsRestantes[i]].push(nome);
     });
+
+    // Preenche com Aprendizes para formar duplas (exceto na bancada da Tati)
+    let indexA = 0;
+    idsRestantes.forEach(id => {
+        // Cada bancada GM recebe um aprendiz
+        if(a[indexA]) {
+            distribuicao[id].push(a[indexA]);
+            indexA++;
+        }
+        // Se ainda sobrar aprendizes, coloca o segundo aprendiz nas bancadas
+        if(a[indexA]) {
+            distribuicao[id].push(a[indexA]);
+            indexA++;
+        }
+    });
+
+    // Renderiza na tela
+    idsGM.forEach(id => {
+        document.getElementById(id).innerText = distribuicao[id].join(" / ");
+    });
+
+    // Léo Fixo no Reforço/Categorias
+    document.getElementById('d-cat').innerText = "LÉO / REFORÇO";
 }
-window.onload = executarRotatividade;
+
+window.onload = gerarRotatividade;
 </script>
 </body>
 </html>
