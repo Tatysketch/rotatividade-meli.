@@ -4,117 +4,161 @@
     <meta charset="UTF-8">
     <title>P2M - OPERAÇÃO LOGÍSTICA</title>
     <style>
-        body { font-family: sans-serif; background-color: #ffffff; margin: 0; padding: 10px; display: flex; justify-content: center; }
-        .painel { background: white; width: 1000px; border-radius: 10px; padding: 20px; border: 1px solid #ddd; }
-        .header { text-align: center; border-bottom: 2px solid #2d3277; margin-bottom: 20px; padding-bottom: 10px; }
-        .header h1 { color: #2d3277; margin: 0; font-size: 24px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; display: flex; justify-content: center; }
+        .painel { background: white; width: 1000px; border-radius: 12px; padding: 25px; border: 1px solid #dcdcdc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        .colunas-container { display: flex; justify-content: space-between; align-items: flex-start; }
-        .coluna { width: 450px; }
+        /* Cabeçalho Corporativo */
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; border-bottom: 2px solid #2d3277; padding-bottom: 15px; margin-bottom: 20px; }
+        .logo-meli { width: 60px; height: auto; }
+        .header-titles h1 { color: #2d3277; margin: 0; font-size: 26px; font-weight: 800; text-transform: uppercase; }
         
-        .esteira { width: 40px; background: #333; height: 650px; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; writing-mode: vertical-rl; text-orientation: mixed; }
+        .info-topo { display: flex; justify-content: space-between; margin-top: 10px; color: #444; font-size: 15px; font-weight: 600; }
+        .tl-nome { color: #2d3277; border-bottom: 2px solid #ffdb00; }
+        #relogio { background: #2d3277; color: white; padding: 3px 10px; border-radius: 4px; font-family: monospace; }
 
-        .card { background: white; border: 1px solid #ddd; border-left: 10px solid #5cb85c; border-radius: 5px; padding: 10px; margin-bottom: 10px; min-height: 50px; }
-        .card-info { font-size: 10px; color: #888; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        .nome-colaborador { color: #2d3277; font-size: 16px; font-weight: bold; }
+        .colunas-container { display: flex; justify-content: space-between; gap: 15px; margin-top: 20px; }
+        .coluna { flex: 1; }
+        .esteira { width: 35px; background: #444; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 11px; writing-mode: vertical-rl; text-orientation: mixed; box-shadow: inset 0 0 8px #000; }
 
-        .card-pesca { border-left: 10px solid #2d3277; }
-        .card-cat { border-left: 10px solid #f0ad4e; }
+        .card { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 12px; margin-bottom: 10px; min-height: 45px; display: flex; flex-direction: column; justify-content: center; }
+        .card-info { font-size: 10px; color: #666; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
+        .nome-colaborador { color: #1a1a1a; font-size: 16px; font-weight: bold; }
 
-        button { background: #2d3277; color: white; width: 100%; padding: 15px; border: none; border-radius: 5px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        /* Cores de Identificação Médias */
+        .card-gm { border-left: 10px solid #77dd77; }      /* Verde */
+        .card-pesca { border-left: 10px solid #7799ff; }   /* Azul */
+        .card-cat { border-left: 10px solid #ffb347; }     /* Laranja */
+
+        button { background: #2d3277; color: white; width: 100%; padding: 16px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button:hover { background: #1a1e4d; transform: translateY(-2px); }
+
+        .historico-box { margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px dashed #ccc; font-size: 12px; color: #666; }
     </style>
 </head>
 <body>
 
 <div class="painel">
-    <div class="header">
-        <h1>P2M - OPERAÇÃO LOGÍSTICA</h1>
-        <p><b>GESTÃO DE BANCADAS - ESTRATÉGIA DE NIVELAMENTO</b></p>
+    <div class="header-container">
+        <img src="https://http2.mlstatic.com/frontend-assets/ui-navigation/5.21.22/mercadolibre/logo__small.png" alt="Mercado Livre" class="logo-meli">
+        <div class="header-titles">
+            <h1>P2M - OPERAÇÃO LOGÍSTICA</h1>
+        </div>
+    </div>
+
+    <div class="info-topo">
+        <div>TEAM LEADER: <span class="tl-nome">OSEIAS BUENO</span></div>
+        <div id="relogio">00/00/0000 | 00:00:00</div>
     </div>
 
     <div class="colunas-container">
         <div class="coluna">
-            <h3 style="text-align:center; color:#888;">LADO ESQUERDO</h3>
-            <div class="card"><div class="card-info">BANCADA 01</div><div class="nome-colaborador" id="e1">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 02</div><div class="nome-colaborador" id="e2">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 03</div><div class="nome-colaborador" id="e3">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 04</div><div class="nome-colaborador" id="e4">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 05</div><div class="nome-colaborador" id="e5">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 06</div><div class="nome-colaborador" id="e6">---</div></div>
+            <h4 style="text-align:center; color:#555; margin-bottom: 15px;">LADO ESQUERDO</h4>
+            <div class="card card-gm"><div class="card-info">BANCADA 01 (GM)</div><div class="nome-colaborador" id="e1">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 02 (GM)</div><div class="nome-colaborador" id="e2">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 03 (GM)</div><div class="nome-colaborador" id="e3">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 04 (GM)</div><div class="nome-colaborador" id="e4">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 05 (GM)</div><div class="nome-colaborador" id="e5">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 06 (GM)</div><div class="nome-colaborador" id="e6">---</div></div>
         </div>
 
         <div class="esteira">ESTEIRA LINHA C</div>
 
         <div class="coluna">
-            <h3 style="text-align:center; color:#888;">LADO DIREITO</h3>
-            <div class="card card-pesca"><div class="card-info">PESCA (ROTATIVO)</div><div class="nome-colaborador" id="d-pesca">---</div></div>
-            <div class="card card-cat"><div class="card-info">CATEGORIAS</div><div class="nome-colaborador" id="d-cat">LÉO / REFORÇO</div></div>
-            <div class="card"><div class="card-info">BANCADA 04</div><div class="nome-colaborador" id="d4">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 05</div><div class="nome-colaborador" id="d5">---</div></div>
-            <div class="card"><div class="card-info">BANCADA 06</div><div class="nome-colaborador" id="d6">---</div></div>
+            <h4 style="text-align:center; color:#555; margin-bottom: 15px;">LADO DIREITO</h4>
+            <div class="card card-pesca"><div class="card-info">PESCA (FIXO)</div><div class="nome-colaborador" id="d-pesca">SAMUEL</div></div>
+            <div class="card card-cat"><div class="card-info">CATEGORIAS</div><div class="nome-colaborador" id="d-cat">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 04 (GM)</div><div class="nome-colaborador" id="d4">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 05 (GM)</div><div class="nome-colaborador" id="d5">---</div></div>
+            <div class="card card-gm"><div class="card-info">BANCADA 06 (GM)</div><div class="nome-colaborador" id="d6">---</div></div>
         </div>
     </div>
 
     <button onclick="gerarRotatividade()">Girar Rotatividade 🔄</button>
+
+    <div class="historico-box">
+        <strong>📝 Último Giro (Memória):</strong>
+        <div id="log-historico">Aguardando primeiro giro...</div>
+    </div>
 </div>
 
 <script>
-// LISTAS CONFORME SUA ORIENTAÇÃO
-const destaques = ["Isac", "Karol Oliveira", "Liliane", "Maycon", "Peterson", "Karol Rocha", "Tati"];
-const aprendizado = ["Alex", "Leticia", "Thais Nunes", "Laura", "Adrian", "Alana", "Clayton", "Kerollen", "Samuel", "Leonardo"];
+// Listas atualizadas da Linha C
+const destaques = ["Isac damasceno", "alana", "Liliane", "Maycon", "Petterson", "Thais virginio", "Tati", "thais nunes"];
+// Samuel removido da lista de aprendizado pois agora é FIXO na Pesca
+const aprendizado = ["Alex", "Leticia ingrid", "Laura", "pamela ", "Clayton", "isaac de araujo", "thais lopes"];
+
+function iniciarRelogio() {
+    setInterval(() => {
+        const agora = new Date();
+        document.getElementById('relogio').innerText = agora.toLocaleDateString('pt-BR') + ' | ' + agora.toLocaleTimeString('pt-BR');
+    }, 1000);
+}
 
 function gerarRotatividade() {
+    const historicoAnterior = JSON.parse(localStorage.getItem('ultimoGiroLinhaC')) || {};
+    
     let d = [...destaques].sort(() => Math.random() - 0.5);
     let a = [...aprendizado].sort(() => Math.random() - 0.5);
     
-    // IDs das bancadas GM (Esquerda 1-6 e Direita 4-6) = 9 bancadas
-    const idsGM = ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'd4', 'd5', 'd6'];
+    // 10 bancadas para sortear (6 esquerda + 4 direita, excluindo a pesca fixa)
+    const idsSorteaveis = ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'd-cat', 'd4', 'd5', 'd6'];
     
-    // 1. SORTEIO PESCA (Removendo da lista de aprendizado para o exemplo, ou destaque)
-    // Conforme seu desenho, Pesca é rotativo. Vamos tirar um do aprendizado para a Pesca.
-    const sorteadoPesca = a.pop();
-    document.getElementById('d-pesca').innerText = sorteadoPesca;
-
-    // 2. DISTRIBUIÇÃO NAS BANCADAS
     let distribuicao = {};
-    idsGM.forEach(id => distribuicao[id] = []);
+    idsSorteaveis.forEach(id => distribuicao[id] = []);
 
-    // A Tati gosta de ficar sozinha, então se ela for sorteada, a bancada dela não recebe aprendiz.
-    const bancadaTati = idsGM[Math.floor(Math.random() * idsGM.length)];
-    distribuicao[bancadaTati].push("Tati");
-    d.splice(d.indexOf("Tati"), 1);
+    // Regra da Tati (Sozinha)
+    const idTati = idsSorteaveis[Math.floor(Math.random() * idsSorteaveis.length)];
+    distribuicao[idTati].push("Tati");
+    d = d.filter(nome => nome !== "Tati");
 
-    // Coloca um Destaque em cada bancada restante (enquanto houver destaques)
-    let idsRestantes = idsGM.filter(id => id !== bancadaTati);
+    // Distribuir Destaques
+    let idsParaDestaques = idsSorteaveis.filter(id => id !== idTati);
     d.forEach((nome, i) => {
-        if(idsRestantes[i]) distribuicao[idsRestantes[i]].push(nome);
+        if(idsParaDestaques[i]) distribuicao[idsParaDestaques[i]].push(nome);
     });
 
-    // Preenche com Aprendizes para formar duplas (exceto na bancada da Tati)
+    // Distribuir Aprendizes (Duplas)
     let indexA = 0;
-    idsRestantes.forEach(id => {
-        // Cada bancada GM recebe um aprendiz
+    idsParaDestaques.forEach(id => {
         if(a[indexA]) {
             distribuicao[id].push(a[indexA]);
             indexA++;
         }
-        // Se ainda sobrar aprendizes, coloca o segundo aprendiz nas bancadas
-        if(a[indexA]) {
+        // Se sobrar, faz trio ou segunda vaga
+        if(a[indexA] && distribuicao[id].length < 2) {
             distribuicao[id].push(a[indexA]);
             indexA++;
         }
     });
 
-    // Renderiza na tela
-    idsGM.forEach(id => {
-        document.getElementById(id).innerText = distribuicao[id].join(" / ");
-    });
-
-    // Léo Fixo no Reforço/Categorias
-    document.getElementById('d-cat').innerText = "LÉO / REFORÇO";
+    // Salvar e Renderizar
+    localStorage.setItem('ultimoGiroLinhaC', JSON.stringify(distribuicao));
+    renderizar(distribuicao);
+    exibirLog(historicoAnterior);
 }
 
-window.onload = gerarRotatividade;
+function renderizar(dist) {
+    document.getElementById('d-pesca').innerText = "SAMUEL";
+    for (let id in dist) {
+        document.getElementById(id).innerText = dist[id].join(" / ");
+    }
+}
+
+function exibirLog(hist) {
+    const log = document.getElementById('log-historico');
+    if (Object.keys(hist).length === 0) return;
+    let resumo = "";
+    for (let id in hist) {
+        resumo += `${hist[id].join("/")} | `;
+    }
+    log.innerText = resumo;
+}
+
+window.onload = () => {
+    iniciarRelogio();
+    const salvo = JSON.parse(localStorage.getItem('ultimoGiroLinhaC'));
+    if(salvo) renderizar(salvo); else gerarRotatividade();
+};
 </script>
 </body>
 </html>
