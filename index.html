@@ -7,7 +7,6 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; display: flex; justify-content: center; }
         .painel { background: white; width: 1000px; border-radius: 12px; padding: 25px; border: 1px solid #dcdcdc; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         
-        /* Cabeçalho Corporativo */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; border-bottom: 2px solid #2d3277; padding-bottom: 15px; margin-bottom: 20px; }
         .logo-meli { width: 60px; height: auto; }
         .header-titles h1 { color: #2d3277; margin: 0; font-size: 26px; font-weight: 800; text-transform: uppercase; }
@@ -24,10 +23,9 @@
         .card-info { font-size: 10px; color: #666; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
         .nome-colaborador { color: #1a1a1a; font-size: 16px; font-weight: bold; }
 
-        /* Cores de Identificação Médias */
-        .card-gm { border-left: 10px solid #77dd77; }      /* Verde */
-        .card-pesca { border-left: 10px solid #7799ff; }   /* Azul */
-        .card-cat { border-left: 10px solid #ffb347; }     /* Laranja */
+        .card-gm { border-left: 10px solid #77dd77; }
+        .card-pesca { border-left: 10px solid #7799ff; }
+        .card-cat { border-left: 10px solid #ffb347; }
 
         button { background: #2d3277; color: white; width: 100%; padding: 16px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         button:hover { background: #1a1e4d; transform: translateY(-2px); }
@@ -40,9 +38,7 @@
 <div class="painel">
     <div class="header-container">
         <img src="https://http2.mlstatic.com/frontend-assets/ui-navigation/5.21.22/mercadolibre/logo__small.png" alt="Mercado Livre" class="logo-meli">
-        <div class="header-titles">
-            <h1>P2M - OPERAÇÃO LOGÍSTICA</h1>
-        </div>
+        <div class="header-titles"><h1>P2M - OPERAÇÃO LOGÍSTICA</h1></div>
     </div>
 
     <div class="info-topo">
@@ -82,9 +78,7 @@
 </div>
 
 <script>
-// Listas atualizadas da Linha C
 const destaques = ["Isac damasceno", "alana", "Liliane", "Maycon", "Petterson", "Thais virginio", "Tati", "thais nunes"];
-// Samuel removido da lista de aprendizado pois agora é FIXO na Pesca
 const aprendizado = ["Alex", "Leticia ingrid", "Laura", "pamela ", "Clayton", "isaac de araujo", "thais lopes"];
 
 function iniciarRelogio() {
@@ -97,41 +91,36 @@ function iniciarRelogio() {
 function gerarRotatividade() {
     const historicoAnterior = JSON.parse(localStorage.getItem('ultimoGiroLinhaC')) || {};
     
-    let d = [...destaques].sort(() => Math.random() - 0.5);
-    let a = [...aprendizado].sort(() => Math.random() - 0.5);
+    // Unifica e embaralha todos exceto a Tati e Samuel
+    let todosDisponiveis = [...destaques, ...aprendizado].filter(n => n !== "Tati");
+    todosDisponiveis.sort(() => Math.random() - 0.5);
     
-    // 10 bancadas para sortear (6 esquerda + 4 direita, excluindo a pesca fixa)
+    // IDs que precisam ser preenchidos (10 IDs)
     const idsSorteaveis = ['e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'd-cat', 'd4', 'd5', 'd6'];
-    
     let distribuicao = {};
     idsSorteaveis.forEach(id => distribuicao[id] = []);
 
-    // Regra da Tati (Sozinha)
+    // 1. Regra da Tati: Sorteia uma bancada para ela ficar sozinha
     const idTati = idsSorteaveis[Math.floor(Math.random() * idsSorteaveis.length)];
     distribuicao[idTati].push("Tati");
-    d = d.filter(nome => nome !== "Tati");
 
-    // Distribuir Destaques
-    let idsParaDestaques = idsSorteaveis.filter(id => id !== idTati);
-    d.forEach((nome, i) => {
-        if(idsParaDestaques[i]) distribuicao[idsParaDestaques[i]].push(nome);
-    });
-
-    // Distribuir Aprendizes (Duplas)
-    let indexA = 0;
-    idsParaDestaques.forEach(id => {
-        if(a[indexA]) {
-            distribuicao[id].push(a[indexA]);
-            indexA++;
-        }
-        // Se sobrar, faz trio ou segunda vaga
-        if(a[indexA] && distribuicao[id].length < 2) {
-            distribuicao[id].push(a[indexA]);
-            indexA++;
+    // 2. Preenchimento Obrigatório: Garante 1 pessoa em cada bancada restante
+    const idsRestantes = idsSorteaveis.filter(id => id !== idTati);
+    idsRestantes.forEach(id => {
+        if (todosDisponiveis.length > 0) {
+            distribuicao[id].push(todosDisponiveis.pop());
         }
     });
 
-    // Salvar e Renderizar
+    // 3. Distribuição de Duplas: O que sobrar de gente vai entrando nas bancadas ocupadas
+    // Exceto na da Tati
+    let i = 0;
+    while (todosDisponiveis.length > 0) {
+        let idAlvo = idsRestantes[i % idsRestantes.length];
+        distribuicao[idAlvo].push(todosDisponiveis.pop());
+        i++;
+    }
+
     localStorage.setItem('ultimoGiroLinhaC', JSON.stringify(distribuicao));
     renderizar(distribuicao);
     exibirLog(historicoAnterior);
