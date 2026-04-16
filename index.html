@@ -61,7 +61,7 @@
 
         <div class="coluna">
             <h4 style="text-align:center; color:#555; margin-bottom: 15px;">LADO DIREITO</h4>
-            <div class="card card-pesca"><div class="card-info">PESCA (FIXO)</div><div class="nome-colaborador" id="d-pesca">SAMUEL</div></div>
+            <div class="card card-pesca"><div class="card-info">PESCA (FIXO)</div><div class="nome-colaborador" id="d-pesca">Ryan</div></div>
             <div class="card card-cat"><div class="card-info">CATEGORIAS</div><div class="nome-colaborador" id="d-cat">---</div></div>
             <div class="card card-gm"><div class="card-info">BANCADA 04 (GM)</div><div class="nome-colaborador" id="d4">---</div></div>
             <div class="card card-gm"><div class="card-info">BANCADA 05 (GM)</div><div class="nome-colaborador" id="d5">---</div></div>
@@ -78,8 +78,8 @@
 </div>
 
 <script>
-const destaques = ["Isac damasceno", "alana", "Liliane", "Maycon", "Petterson", "Thais virginio", "Tati", "thais nunes"];
-const aprendizado = ["Alex", "Leticia ingrid", "Laura", "pamela ", "Clayton", "isaac de araujo", "thais lopes"];
+const destaques = ["Thaianny", "alana", "Thais Lopes", "Pamela ", "Tamyres","Letícia" "Tati"];
+const aprendizado = ["Débora", "Karina", "Marcela", "Pietra ", "Isaac Araújo", "Fernanda", "Jefferson"];
 
 function iniciarRelogio() {
     setInterval(() => {
@@ -91,7 +91,7 @@ function iniciarRelogio() {
 function gerarRotatividade() {
     const historicoAnterior = JSON.parse(localStorage.getItem('ultimoGiroLinhaC')) || {};
     
-    // Unifica e embaralha todos exceto a Tati e Samuel
+    // Unifica e embaralha todos exceto a Tati 
     let todosDisponiveis = [...destaques, ...aprendizado].filter(n => n !== "Tati");
     todosDisponiveis.sort(() => Math.random() - 0.5);
     
@@ -127,7 +127,7 @@ function gerarRotatividade() {
 }
 
 function renderizar(dist) {
-    document.getElementById('d-pesca').innerText = "SAMUEL";
+    document.getElementById('d-pesca').innerText = "Ryan";
     for (let id in dist) {
         document.getElementById(id).innerText = dist[id].join(" / ");
     }
